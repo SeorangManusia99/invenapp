@@ -320,20 +320,12 @@ return [
             'route' => 'users.index',
             'icon' => 'fas fa-users',
         ],
-
-        [
+                [
             'text' => 'Barang',
             'route' => 'barang.index',
-            'icon' => 'fas fa-box',
+            'icon' => 'fas fa-boxes',
         ],
-
-        [
-            'text' => 'Pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 1,
-            'label_color' => 'success',
-        ],
+        
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

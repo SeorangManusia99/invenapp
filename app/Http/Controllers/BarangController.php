@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Barang;
 use RealRashid\SweetAlert\Facades\Alert;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BarangExport;
+use App\Imports\BarangImport;
 
 class BarangController extends Controller
 {
@@ -69,9 +73,9 @@ class BarangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(Barang $barang)
     {
-        return view('users.edit', compact('user'));
+        return view('barang.edit', compact('barang'));
     }
 
     /**
@@ -79,15 +83,16 @@ class BarangController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = User::find($id);
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+        $barang = Barang::find($id);
+        $barang->update([
+            'nama_barang' => $request->nama_barang,
+            'merk' => $request->merk,
+            'tipe' => $request->tipe,
+            'satuan' => $request->satuan
         ]);
 
-        Alert::success('Success', 'User Berhasil Di Update');
-        return redirect()->route('users.index');
+        Alert::success('Success', 'Barang Berhasil Di Update');
+        return redirect()->route('barang.index');
     }
 
     /**
@@ -95,9 +100,34 @@ class BarangController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::find($id);
-        $user->delete();
-        Alert::success('Success', 'User Berhasil Di Hapus');
-        return redirect()->route('users.index');
+        $barang = Barang::find($id);
+        $barang->delete();
+        Alert::success('Success', 'Barang Berhasil Di Hapus');
+        return redirect()->route('barang.index');
+    }
+
+    public function cetakBarangPdf()
+    {
+        $barang = Barang::all();
+
+        $pdf = Pdf::loadView('barang.laporan-barang', compact('barang'));
+        return $pdf->stream();
+    }
+
+    public function exportBarang()
+    {
+        return Excel::download(new BarangExport, 'barang.xlsx');
+    }
+
+    public function importBarang(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        Excel::import(new BarangImport, request()->file('file'));
+
+        Alert::success('Success', 'Barang Berhasil Di Import');
+        return redirect()->route('barang.index');
     }
 }

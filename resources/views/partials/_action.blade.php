@@ -3,6 +3,6 @@
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger" title="Hapus"><i class="fas fa-trash"></i>Hapus</button>
-        <a href="{{ $edit_url }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i>Edit</a>
+        <a href="{{ $edit_url }}" class="btn btn-warning"><i class="fas fa-edit"></i>Edit</a>
     </form>
 </div>

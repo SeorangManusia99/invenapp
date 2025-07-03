@@ -13,8 +13,15 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Data Barang
-                    <a href="{{ route('barang.create') }}" class="btn btn-md btn-primary float-right">Tambah Baru</a>
+                    <h3 class="card-title">Data Barang</h3>
+                    <div class="card-tools">
+                        <a href="{{ route('barang.create') }}" class="btn btn-md btn-primary">Tambah Baru</a>
+                        <button type="button" class="btn btn-md btn-success ml-2" data-toggle="modal" data-target="#importModal">
+                            Import
+                        </button>
+                        <a href="{{ route('cetak.barang') }}" class="btn btn-md btn-info ml-2">Cetak</a>
+                        <a href="{{ route('export.barang') }}" class="btn btn-md btn-warning ml-2">Export</a>
+                    </div>
                 </div>
 
                 <div class="card-body">
@@ -32,10 +39,36 @@
                         <tbody>
 
                         </tbody>
-`
                     </table>
 
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">Import Data Barang</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('import.barang') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="file">Pilih file Excel untuk diimport</label>
+                            <input type="file" name="file" class="form-control-file" id="file" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Import</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

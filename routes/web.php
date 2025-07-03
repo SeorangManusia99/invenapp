@@ -18,4 +18,9 @@ Route::prefix('admin')->middleware(['auth'])->group( function () {
 
     Route::resource('barang', BarangController::class);
     Route::get('get-barang', [BarangController::class, 'getBarang'])->name('get.barang');
+
+    Route::get('barang-print', [BarangController::class, 'cetakBarangPdf'])->name('cetak.barang');
+    Route::get('export-barang', [BarangController::class, 'exportBarang'])->name('export.barang');
+
+    Route::get('import-barang', [BarangController::class, 'importBarang'])->name('import.barang');
 });

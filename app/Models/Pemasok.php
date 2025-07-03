@@ -9,10 +9,31 @@ class Pemasok extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_pemasok', 'nama_kontak', 'nomor_hp', 'alamat'];
+    /**
+     * Menentukan nama tabel secara eksplisit.
+     * Ini wajib ada jika nama tabel Anda 'pemasok' (singular).
+     *
+     * @var string
+     */
+    protected $table = 'pemasok';
 
+    /**
+     * Atribut yang bisa diisi.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'nama_pemasok',
+        'alamat',
+        'telepon',
+    ];
+
+    /**
+     * Mendefinisikan relasi "hasMany" ke model BarangMasuk.
+     * Satu pemasok bisa memiliki banyak transaksi barang masuk.
+     */
     public function barangMasuk()
     {
-        return $this->hasOne(BarangMasuk::class, 'pemasok_id', 'id');
+        return $this->hasMany(BarangMasuk::class, 'pemasok_id');
     }
 }

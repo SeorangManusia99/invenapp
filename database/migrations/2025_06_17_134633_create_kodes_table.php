@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('kondisi_barang', ['baik', 'rusak', 'hilang']);
             $table->timestamps();
 
-            $table->foreign('barang_masuk_detail_id')->references('id')->on('barang_masuk_details')->onDelete('cascade');
+            $table->foreign('barang_masuk_detail_id')->references('id')->on('barang_masuk_detail')->onDelete('cascade');
         });
     }
 
